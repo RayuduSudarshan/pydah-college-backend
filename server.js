@@ -24,7 +24,6 @@ app.use(cors({
   credentials: true
 }));
 
-// Increase JSON body size (for large uploads)
 app.use(express.json({ limit: '200mb' }));
 
 // -------------------- UPLOADS SETUP --------------------
@@ -38,6 +37,7 @@ app.use('/uploads', express.static(uploadsDir, {
   setHeaders: (res, filePath) => {
     const name = path.basename(filePath);
     res.setHeader('Content-Disposition', `inline; filename="${name}"`);
+
     if (path.extname(name).toLowerCase() === '.pdf') {
       res.setHeader('Content-Type', 'application/pdf');
     }
@@ -57,7 +57,7 @@ app.get('/api/test', (req, res) => {
   res.json({ status: 'Server is running 🚀' });
 });
 
-// -------------------- START SERVER (Railway Safe) --------------------
+// -------------------- START SERVER (RAILWAY SAFE) --------------------
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
   // cleanupUnverifiedUsers();
